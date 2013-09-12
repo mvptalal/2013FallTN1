@@ -1,3 +1,21 @@
+<?
+	
+	
+	
+	$pages = array(
+	'home' => array(
+	'url' => 'index.php', 
+	'section' => 'home',
+	'title' => 'Home'),
+	'contact' => 'contact.php');
+	
+	$location = 'home';
+	$name = $pages[$location];
+	$msg = "Hello $name[title]";
+	
+?>
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -9,46 +27,16 @@
   </head>
   
   <body>
-  <nav class="navbar navbar-inverse" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#">Playground</a>
-  </div>
-
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Contact</a></li>
-      <li><a href="#">Links</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li><a href="#">Separated link</a></li>
-          <li><a href="#">One more separated link</a></li>
-        </ul>
-      </li>
-    </ul>
-    
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Signed in as Talal Nweiran</a></li>
-     
-    </ul>
-  </div><!-- /.navbar-collapse -->
-</nav>
-
+  	
+ <? include('_nav.php'); ?>
+   <div class="container">
+   	<pre>
+  		<? print_r($pages); ?>
+  	</pre>
+  	
 <div class="jumbotron">
-  <div class="container">
-    <h1>Hello, world!</h1>
+    <h1><?=$msg?></h1>
+    
     <p>Fall 2013 Web Server Programing</p>
     <p><a class="btn btn-success btn-lg">Learn more</a></p>
   </div>
@@ -95,5 +83,6 @@
  </div> 
     <script src="//code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+ 
   </body>
 </html>
