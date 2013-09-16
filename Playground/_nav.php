@@ -1,3 +1,28 @@
+<?
+	
+	
+	
+	$pages = array(
+	array(
+	'url' => 'index.php', 
+	'section' => 'home',
+	'title' => 'Home'
+	),
+	array(
+	'url' => 'contacts.php',
+	'section' => 'contacts',
+	'title' => 'Contacts'
+	),
+	
+	$pages [] = array(
+		'url' => 'store.php',
+		'section' => 'store',
+		 'title' => 'Buy our Stuff'
+	),
+	);
+?>
+
+
  <nav class="navbar navbar-inverse" role="navigation">
  	<div class="container">
   <div class="navbar-header">
@@ -13,9 +38,27 @@
 
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
+    	
+    	
+    	
       <li class="home" <? if($location =='home') echo "active";?>><a href="./">Home</a></li>
-      <li class="contact<? if($location =='contact') echo "active";?>"><a href="contacts.php">Contact</a></li>
+      <li class="contact<? if($location =='contacts') echo "active";?>"><a href="contacts.php">Contacts</a></li>
       <li class="links"<? if($location =='links') echo "active";?>><a href="links.php">Links</a></li>
+      
+      
+     
+      		
+      
+ 
+      		 <?foreach ($pages as $name => $data): ?>
+				      <li class="<?=$data['section']?> <? if($location ==$data['section']) echo "active";?>">
+				      	<a href="<?=$data['url']?>" <?=$data['title']?> </a></li>
+			 <? endforeach; ?>
+      
+      
+      
+      
+      
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -35,4 +78,9 @@
     <p class="navbar-text pull-right">Signed in As<a href="#" class="navbar-link">Talal Nweiran</a> </p> 
     </div>
   </div>
+  
+  	<pre class="container">
+  		<? echo json_encode($pages, 1); ?>
+  	</pre>
+  	
 </nav>

@@ -1,21 +1,8 @@
 <?
-	
-	
-	
-	$pages = array(
-	'home' => array(
-	'url' => 'index.php', 
-	'section' => 'home',
-	'title' => 'Home'),
-	'contact' => 'contact.php');
-	
 	$location = 'home';
-	$name = $pages[$location];
-	$msg = "Hello $name[title]";
-	
+
+
 ?>
-
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -30,10 +17,7 @@
   	
  <? include('_nav.php'); ?>
    <div class="container">
-   	<pre>
-  		<? print_r($pages); ?>
-  	</pre>
-  	
+   
 <div class="jumbotron">
     <h1><?=$msg?></h1>
     
@@ -42,7 +26,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row"><div class="container"> 
   <div class="col-sm-6 col-md-3">
     <div class="thumbnail">
       <div class="caption">
@@ -83,6 +67,14 @@
  </div> 
     <script src="//code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		$(".nav .home").addClass("active").fadeOut().fadeIn();
+    		
+    	});
+    	
+    	
+    </script>
  
   </body>
 </html>
