@@ -21,6 +21,26 @@ include_once __DIR__ . '../Models/Products.php';
 function GetConnection()
 {
 	global $sql_password;
-	$conn = new mysqli('localhost', 'n02176156', $sql_password, 'n02176156_db');
+	$conn = new mysqli('localhost', 'n02176156', 's928649', 'n02176156_db');
 	return;
+}
+
+function fetch_all($sql)
+{
+		$ret = array();
+		$conn = GetConnection(); //connection to database
+		$result = $conn->query($sql);
+		
+		while ($rs = $result->fetch_assoc()) { //goes though all the records
+			$ret[] = $rs; // like calling an ADD function
+			
+		}
+		
+		$conn->close(); //closes the connection
+		return $ret;
+}		
+function fetch_one($sql)
+{
+	$arr = fetch_all($sql);
+	return $arr[0];
 }
