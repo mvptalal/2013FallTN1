@@ -1,4 +1,4 @@
-<?php
+<?php //This is the controller
 include_once '../../inc/_global.php';
 
 @$action = $_REQUEST['action'];
@@ -15,8 +15,16 @@ switch ($action) {
 		break;
 			
 	case 'save':
-		$model = Users::Get($_REQUEST['id']);
-		$view  ='details.php';
+		
+		$errors = Users::Save($_REQUEST);
+		if($errors){
+			$model = $_REQUEST;
+			$view = 'new.php';
+		}
+		else{
+			header("Location: ?");
+			die();
+		}
 		break;		
 			
 	case 'edit':

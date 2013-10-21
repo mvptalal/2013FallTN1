@@ -18,5 +18,21 @@ class Users {
 			
 		}		
 		
+		static public function Save($row)
+		{
+			$sql = " Insert Into Users (FirstName, LastName, Password, UserType) "
+				.  " Values ('$row[FirstName]', '$row[LastName]', '$row[Password]', '$row[UserType]' ) ";
+			$conn = GetConnection();
+			$conn->query($sql);
+			$error = $conn->error;
+			$conn->close();
+			
+			if($error){
+				return array('db_error' => $error);
+			} else{
+				return false;
+			}
+		}
+		
 	}
 

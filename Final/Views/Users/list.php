@@ -2,7 +2,8 @@
 
 <div class="container">
 
-<h2>Users</h2>
+<h2>Users</h2> 
+<a href="?action=new">Add Contact</a> 
 
 <table class="table table-hover table-bordered table-striped">
 	<thead>
@@ -24,7 +25,6 @@
 			<a class="glyphicon glyphicon-file" href="?acton=details&id=<?=$rs['id']?>"> 
 			<a class="glyphicon glyphicon-pencil" href="?acton=details&id=<?=$rs['id']?>"> 
 			<a class="glyphicon glyphicon-trash" href="?acton=details&id=<?=$rs['id']?>"> 
-
 				Details
 			</a>
 		</td>
