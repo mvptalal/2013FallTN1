@@ -22,11 +22,9 @@
 		<td><?=$rs['LastName']?> </td>
 		<td><?=$rs['UserType']?> </td>
 		<td>
-			<a class="glyphicon glyphicon-file" href="?acton=details&id=<?=$rs['id']?>"> 
-			<a class="glyphicon glyphicon-pencil" href="?acton=details&id=<?=$rs['id']?>"> 
-			<a class="glyphicon glyphicon-trash" href="?acton=details&id=<?=$rs['id']?>"> 
-				Details
-			</a>
+			<a class="glyphicon glyphicon-file" href="?acton=details&id=<?=$rs['id']?>"></a> 
+			<a class="glyphicon glyphicon-pencil" href="?acton=edi&id=<?=$rs['id']?>"> </a>
+			<a class="glyphicon glyphicon-trash" href="?acton=delete&id=<?=$rs['id']?>"></a>
 		</td>
 	</tr>
 <? endforeach ?>

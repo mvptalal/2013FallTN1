@@ -33,6 +33,25 @@ class Users {
 				return false;
 			}
 		}
+		static public function Blank()
+		{
+			return array( 'FirstName' => null, 'LastName'=> null, 'Password'=> null, 'UserType'=> null, 'FBID'=> null );
+		}
 		
+		static public function Validate($row)
+		{
+			$errors = array();
+			if(!$row['FirstName']) $errors['FirstName'] = 'Is Required';
+			if(!$row['LastName']) $errors['LastName'] = 'Is Required';
+			if(! is_numeric( $row['UserType'])) $errors['UserType'] = 'Must Be a Number';
+			if(!$row['UserType']) $errors['UserType'] = 'Is Required';
+			
+			if(count($errors) == 0) {
+				return false;
+			}else{
+				return $errors;
+			}
+
+		}
 	}
 
