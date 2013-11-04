@@ -1,8 +1,17 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
-
+<style>
+	tr.success, tr.success td{
+		background-color: #00AA00;
+	}
+</style>
 <div class="container">
         
         <h2>Users</h2>
+        
+        <? if(isset( $_REQUEST['status']) && ($_REQUEST['status'] == 'Saved'): ?>
+        <div class="alert alert-success"> </div>
+        <b> Success!</b> You're user has been Saved.
+        <? endif ?>
         
         <a href="?action=new">Add Contact</a>
         
@@ -17,10 +26,10 @@
                 </thead>
                 <tbody>
                 <? foreach ($model as $rs): ?>
-                        <tr>
+                        <tr class" <?$model['id']==$_REQUEST['id'] ? /* <-means then terinary operator*/ 'success' : /*<-if not */ '' ?>">
                                 <td><?=$rs['FirstName']?></td>
                                 <td><?=$rs['LastName']?></td>
-                                <td><?=$rs['UserType']?></td>
+                                <td><?=$rs['UserType_Name']?></td>
                                 <td>
                                         <a class="glyphicon glyphicon-file" href="?action=details&id=<?=$rs['id']?>&format=dialog" data-toggle="modal" data-target="myModal"></a>
                                         <a class="glyphicon glyphicon-pencil" href="?action=edit&id=<?=$rs['id']?>&format=dialog" data-toggle="modal" data-target="myModal"></a>
@@ -37,6 +46,12 @@
 <? function Scripts(){ ?>
         <script src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
         <script type="text/javascript">
-                $(".table").dataTable();
+        $(function(){
+        	  $(".table").dataTable();
+        	$(".alert .close").click(function(){
+        		$(this).closest(".alert").slideUp();
+        	});
+        })
+              
         </script>
 <? } ?>

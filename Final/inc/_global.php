@@ -35,7 +35,7 @@ function fetch_all($sql)
 			$ret[] = $rs; // like calling an ADD function
 			
 		}
-		
+		echo $conn->error;
 		$conn->close(); //closes the connection
 		return $ret;
 }		

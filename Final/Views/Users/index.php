@@ -1,4 +1,4 @@
-<?php
+<?php //controller
 include_once '../../inc/_global.php';
 
 @$action = $_REQUEST['action'];
@@ -22,7 +22,8 @@ switch ($action) {
                  $errors = Users::Save($_REQUEST);
         }
         if(!$errors){
-            header("Location: ?");
+            header("Location: ?status=Saved&id=$_REQUEST['id]");
+			
             die();
         }
        			$model = $_REQUEST;

@@ -38,10 +38,16 @@
                                 <? if(isset($errors['Password'])): ?><span class = "error"><?=$errors['Password'] ?> </span> <? endif;?>
                         </div>
                 </div>
-                <div class="form-group <?=isset($errors['UserType_id']) ? 'has error' : '' ?>">
-                        <label for="UserType_id" class="col-sm-2 control-label">User Type</label>
+                <div class="form-group <?=isset($errors['UserType']) ? 'has error' : '' ?>">
+                        <label for="UserType" class="col-sm-2 control-label">User Type</label>
                         <div class="col-sm-10">
-                                <input type="text" name="UserType_id" id="UserTypes_id" placeholder="User Type" class="form-control" value="<?=$model['UserType_id']?>"/>
+                        		<select name="UserType" id="UserType" placeholder="User Type" class="form-control">
+                        			<? foreach (Keywords::GetSelectListFor(2) as $keywordRs) :?> 
+										<option  value="<?=$KeywordRs['id']?>"> <?=$KeywordRs['Name']?> </option>
+									   <? endforeach;  ?>
+                        			
+                        		</select>
+                        	
                                 <? if(isset($errors['UserType_id'])): ?><span class = "error"><?=$errors['UserType_id'] ?> </span> <? endif;?>
                         </div>
                 </div>
@@ -52,3 +58,12 @@
                 </div>
         </form>
 </div>
+<script type="text/javascript">
+	
+	$(function(){
+		
+		$("#UserType").val(<?=$model['UserType']?>);
+	})
+	
+	
+</script>
