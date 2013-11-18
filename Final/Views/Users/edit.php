@@ -48,7 +48,7 @@
                         			
                         		</select>
                         	
-                                <? if(isset($errors['UserType_id'])): ?><span class = "error"><?=$errors['UserType_id'] ?> </span> <? endif;?>
+                                <? if(isset($errors['UserType'])): ?><span class = "error"><?=$errors['UserType'] ?> </span> <? endif;?>
                         </div>
                 </div>
                 <div class="form-group">

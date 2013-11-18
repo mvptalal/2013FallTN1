@@ -3,6 +3,7 @@ include_once '../../inc/_global.php';
 
 @$action = $_REQUEST['action'];
 @$format = $_REQUEST['format'];
+$errors = null;
 switch ($action) {
         case 'details':
                 $model = Users::Get($_REQUEST['id']);
@@ -18,17 +19,22 @@ switch ($action) {
                 
         case 'save':
                 $errors = Users::Validate($_REQUEST);
-        if(!$errors){
-                 $errors = Users::Save($_REQUEST);
-        }
-        if(!$errors){
-            header("Location: ?status=Saved&id=$_REQUEST['id]");
-			
-            die();
-        }
-       			$model = $_REQUEST;
-        		$view = 'edit.php';
-				$title = "Edit: $model[FirstName] $model[LastName]";
+                if(!$errors){
+                        $errors = Users::Save($_REQUEST);                        
+                }
+                if(!$errors){
+                        if($format == 'plain' || $format == 'json'){
+                                $view = 'item.php';
+                                $rs = Users::Get($_REQUEST['id']);
+                        }else{
+                                header("Location: ?status=Saved&id=$_REQUEST[id]");
+                                die();                                
+                        }
+                }else{
+                        $model = $_REQUEST;
+                        $view = 'edit.php';
+                        $title        = "Edit: $model[FirstName] $model[LastName]"        ;                        
+                }                
                 break;
                 
         case 'edit':
@@ -67,9 +73,15 @@ switch ($format) {
 	case "plain":
 	include $view;
 		break;
-	
+		
+	case 'json' :
+		echo json_encode(array('model' => $model, 'errors' => $errors)); //sending back the actual data
+		break; 
+		
 	default:
 		include '../Shared/_Layout.php';
 		break;
+		
+	
 }
 
