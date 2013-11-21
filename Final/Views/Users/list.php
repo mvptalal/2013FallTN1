@@ -1,4 +1,6 @@
 <link href="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" type="text/css" rel="stylesheet" />
+
 <style>
         .table tr.success2, .table tr.success2 td{
                 background-color: #FFAA00 !important;
@@ -19,7 +21,7 @@
                 </div>
         <? endif; ?>
         
-        <a href="?action=new">Add Contact</a>
+        <a href="?action=new" id="add-Link">Add Contact</a>
         <div id="table-wrapper" class="col-md-12">
         <table class="table table-hover table-bordered table-striped">
                 <thead>
@@ -31,9 +33,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <? foreach ($model as $rs): ?>
-                        <? include 'item.php'; ?>
-                <? endforeach ?>
                 </tbody>
         </table>
         </div>
@@ -44,60 +43,63 @@
         
 </div>
 
-<script id="row-template"  type="text/x-handlebars-template">
-	
-                                <td>{{FirstName}}</td>
-                                <td>{{LastName}}</td>
-                                <td>{{UserType_Name}}</td>
-                                <td>
-                                        <a class="glyphicon glyphicon-file" href="?action=details&id={{id}}" ></a>
-                                        <a class="glyphicon glyphicon-pencil" href="?action=edit&id={{id}}" ></a>
-                                        <a class="glyphicon glyphicon-trash" href="?action=delete&id={{id}}" ></a>
-                                </td>
-                    
-	
+<script id="row-template" type="text/x-handlebars-template">
+                <td>{{FirstName}}</td>
+                <td>{{LastName}}</td>
+                <td>{{UserType_Name}}</td>
+                <td>
+                        <a class="glyphicon glyphicon-file" href="?action=details&id={{id}}" ></a>
+                        <a class="glyphicon glyphicon-pencil" href="?action=edit&id={{id}}" ></a>
+                        <a class="glyphicon glyphicon-trash" href="?action=delete&id={{id}}" ></a>
+                </td>
 </script>
 
-<script id="tbody-template"  type="text/x-handlebars-template">
-	
-	{{#each}}
-		<tr>
-			{{#tem}}		
-		</tr>
-	
-	{{/each}}
-	
+<script id="tbody-template" type="text/x-handlebars-template">
+        {{#each .}}
+                <tr>
+                        {{> row-template}}
+                </tr>
+        {{/each}}
 </script>
-</div>
-<? function Scripts(){ ?>
+
+</div> 	
+
+ 
+<? function Scripts(){ ?> 
+	
+        <? global $model; ?>                             
         <script src="//cdnjs.cloudflare.com/ajax/libs/datatables/1.9.4/jquery.dataTables.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
         <script type="text/javascript">
-        $(function(){
+        $(function(){ /*all code go in this variable */ 
         	
- 
-        	        	
+        		var curDialogAction = null;
+                var templateRow = Handlebars.compile($("#row-template").html()); //compiles html in row-template
+                Handlebars.registerPartial("row-template", templateRow);                                
+                var tableTemplate = Handlebars.compile($("#tbody-template").html());
+                                                        
+                $(".table tbody").html(tableTemplate(<?=json_encode($model);?>))        
+                
                 $(".table").dataTable();
+                
                 $(".alert .close").click(function(){
                         $(this).closest(".alert").slideUp();
                 });
                 
-              
+                $("#add-link").click(function(){
+                	curDialogAction = "add";
+                	ShowDialog(this.ref); return false;
+                });
+                
                 $(".table a").click(function(){
                         
-                        
                         if($(this).closest("tr").hasClass("success2")){
-                                $(".success2").removeClass("success2");
-                                $("#table-wrapper").removeClass("col-md-6").addClass("col-md-12");
-                                $("#details").html('');                        
+                               HideDialog();
                         }else{
-                                $(".success2").removeClass("success2");
-                                $(this).closest("tr").addClass("success2");
-                                $("#table-wrapper").removeClass("col-md-12").addClass("col-md-6");
-                                
-                                $("#details").load(this.href, {format: "plain"}, function(){
-                                        $("#details form").submit(HandleSubmit);                                        
+                        		curDialogAction = "update";
+                               ShowDialog(this.ref, $(this).closest("tr"));                              
                                 });                                
                         }
                         
@@ -106,29 +108,49 @@
                 
                 var HandleSubmit = function (){
                         var data = $(this).serializeArray();
-                        data.push({name:'format', value:'json'}); 						//adding data
-                        $.post(this.action, data, function(results){ 					//sending data to
+                        data.push({name:'format', value:'json'});
+                        $.post(this.action, data, function(results){
+                                
                                 if(results.errors){
-                                        $("#details").html(results);                                        
+                                	//diplay errors
+                                	// highlight fields
+                                	for(k in results.errors){
+                                		toastr.error(k + ' ' + results.errors[k], 'Could not save');
+                                		var e = $('#' + k)
+                                			.after($('<span class="control-label" />').html(results.errors[k]))
+                                			.closest('.form-group').addClass('has-error')
+                                		}
+                                		
                                 }else{
-                                	var template = Handlebars.compile($("#row-template").html());
-                                	
-                                	$(".success2 ").html(template(results.model));
-                               
-        						 }
+                                		if(curDialogAction == "add"){
+                                			
+                                		}else{
+                                        $(".success2").html(templateRow(results.model));
+                                       } 
+                                        toastr.success("Your record has been saved!", "Success");
+                                       
+                                }
+                                
                         }, 'json');
                         
                         return false;
                 }
+                
+                var ShowDialog=function(url, /*optional*/selectedRow){
+                				$(".success2").removeClass("success2");
+                				if(selectedRow){
+                					selectedRow.addClass("success2");
+                				}
+                                $("#table-wrapper").removeClass("col-md-12").addClass("col-md-6");
+                                
+                                $("#details").load(url, {format: "plain"}, function(){
+                                $("#details form").submit(HandleSubmit);     
+                }
+                var HideDialog = function(){
+                			    $(".success2").removeClass("success2");
+                                $("#table-wrapper").removeClass("col-md-6").addClass("col-md-12");
+                                $("#details").html('');                        
+                }
         })
         </script>
 <? } ?>
-
-
-
-
-
-
-
-
-

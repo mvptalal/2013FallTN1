@@ -1,22 +1,23 @@
-<?php //controller
+<?php
 include_once '../../inc/_global.php';
 
 @$action = $_REQUEST['action'];
 @$format = $_REQUEST['format'];
 $errors = null;
+
 switch ($action) {
         case 'details':
                 $model = Users::Get($_REQUEST['id']);
-                $view = 'details.php';
-				$title = "Details for: $model[FirstName] $model[LastName]";
-                break;
-        
-        case 'new':
-                $model = Users::Blank();
-                $view = 'edit.php';
-				$title = "Create New User";
+                $view         = 'details.php';
+                $title        = "Details for: $model[FirstName] $model[LastName]";        
                 break;
                 
+        case 'new':
+                $model = Users::Blank();
+                $view         = 'edit.php';                
+                $title        = "Create New User";        
+                break;
+        
         case 'save':
                 $errors = Users::Validate($_REQUEST);
                 if(!$errors){
@@ -25,7 +26,7 @@ switch ($action) {
                 if(!$errors){
                         if($format == 'plain' || $format == 'json'){
                                 $view = 'item.php';
-                                $rs = Users::Get($_REQUEST['id']);
+                                $rs = $model = Users::Get($_REQUEST['id']);
                         }else{
                                 header("Location: ?status=Saved&id=$_REQUEST[id]");
                                 die();                                
@@ -33,55 +34,50 @@ switch ($action) {
                 }else{
                         $model = $_REQUEST;
                         $view = 'edit.php';
-                        $title        = "Edit: $model[FirstName] $model[LastName]"        ;                        
+                        $title        = "Edit: $model[FirstName] $model[LastName]";                        
                 }                
                 break;
                 
         case 'edit':
                 $model = Users::Get($_REQUEST['id']);
-                $view = 'edit.php';
-				$title = "Edit: $model[FirstName] $model[LastName]";
+                $view         = 'edit.php';                
+                $title        = "Edit: $model[FirstName] $model[LastName]";        
                 break;
                 
         case 'delete':
-			    if(isset($_POST ['id'])){
-                 $errors = Users::Delete($_REQUEST['id']);		 
-      			if(!$errors){
-        		    header("Location: ?");
-         			   die();
-        			}
-				}
-			 	     	$model = Users::Get($_REQUEST['id']);
-            		    $view = 'delete.php';
-						$title = "Delete: $model[FirstName] $model[LastName]";
-						  break;
-			 
-                
-              
-                
+                if(isset($_POST['id'])){
+                        $errors = Users::Delete($_REQUEST['id']);                        
+                        if(!$errors){
+                                header("Location: ?");
+                                die();
+                        }                                                        
+                }
+                $model = Users::Get($_REQUEST['id']);
+                $view         = 'delete.php';                                        
+                $title        = "Edit: $model[FirstName] $model[LastName]";        
+                break;
+        
         default:
                 $model = Users::Get();
-                $view = 'list.php';
-				$title = "Users";
+                $view         = 'list.php';
+                $title        = 'Users';                
                 break;
 }
-switch ($format) {
-	case 'dialog':
-		include '../Shared/_DialogLayout.php';
-		break;
-		
-	case "plain":
-	include $view;
-		break;
-		
-	case 'json' :
-		echo json_encode(array('model' => $model, 'errors' => $errors)); //sending back the actual data
-		break; 
-		
-	default:
-		include '../Shared/_Layout.php';
-		break;
-		
-	
-}
 
+switch ($format) {
+        case 'dialog':
+                include '../Shared/_DialogLayout.php';                                
+                break;
+                
+        case 'plain':
+                include $view;
+                break;
+                
+        case 'json':
+                echo json_encode(array('model'=> $model, 'errors'=> $errors));
+                break;
+        
+        default:
+                include '../Shared/_Layout.php';                
+                break;
+}
