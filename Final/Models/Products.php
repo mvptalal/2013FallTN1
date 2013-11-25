@@ -7,17 +7,15 @@ class Products {
 	
 		static public function Get()
 		{
-			$ret = array();
-			$conn = GetConnection();
-			$result = $conn->query('SELECT * FROM Products');
-			while ($rs = $result->fetch_assoc()) {
-				$ret[] = $rs;
-				
-			}
+			return fetch_all('SELECT * FROM PRODUCTS');
 			
-			$conn->close();
-			return $ret;
-		}		
+		}
+			
+		static public function GetAllInCategory($Categoryid)
+		{
+			return fetch_all("SELECT * FROM PRODUCTS WHERE 'Product_Categories'=$CategoryId);
+		}
+				
 		
 	}
 
