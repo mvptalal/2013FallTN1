@@ -12,14 +12,14 @@ switch ($action) {
 		
 		break;
 	case 'categories':
-		$model = Product::GerCategories();
+		$model = Products::GetCategories();
 		
 		break;
 		
         default:
                 //$model = Users::Get();
                 $view         = 'home.php';
-                $title        = 'Users';                
+                $title        = 'Store';                
                 break;
 }
 
