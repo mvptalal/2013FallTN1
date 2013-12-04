@@ -8,7 +8,8 @@ class Users {
                 	$sql = "SELECT U.*, K.Name as UserType_Name 
                 			FROM Users U
                 			Join Keywords K ON U.'UserType'=K.id
-                	 		WHERE U.id=$id";
+                	 		WHERE U.id=$id
+                	 		";
                         return fetch_one($sql);
                 }else{
                 	$sql = "SELECT U.*, K.Name as UserType_Name 
