@@ -10,12 +10,13 @@
 </head>
 <body>
         <header>
+        	  
                 <div class="container">
-                        <h1>My website</h1>
-                </div>
+                      <h1>My Website</h1>
+                
         </header>
         
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar navbar-inverse " role="navigation">
                 <div class="container">
                         <div class="navbar-header">
                                 <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".nav-c">
@@ -49,7 +50,7 @@
                         </div>
                 </div>
         </div>
-
+</div>
         <? include $view; ?>
 
 

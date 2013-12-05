@@ -79,7 +79,7 @@
 <script type="text/html" id="shopping-cart-template">
         <span class="glyphicon glyphicon-shopping-cart"></span>
         <a href="#" class="navbar-link" data-bind="click: toggleCartList">Cart</a>
-        <span class="badge" data-bind="text: cart().length"></span>
+        <span class="badge" <? $cart = $_SESSION['cart']; echo count($cart); ?> </span>
 </script>
 
 

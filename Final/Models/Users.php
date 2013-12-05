@@ -7,14 +7,14 @@ class Users {
                 if(isset($id)){
                 	$sql = "SELECT U.*, K.Name as UserType_Name 
                 			FROM Users U
-                			Join Keywords K ON U.'UserType'=K.id
+                			Join Keywords K ON U.UserType=K.id
                 	 		WHERE U.id=$id
                 	 		";
                         return fetch_one($sql);
                 }else{
                 	$sql = "SELECT U.*, K.Name as UserType_Name 
                 			FROM Users U
-                			Join Keywords K ON U.'UserType'=K.id
+                			Join Keywords K ON U.UserType=K.id
                 	 		";
                         return fetch_all($sql);
                 }
