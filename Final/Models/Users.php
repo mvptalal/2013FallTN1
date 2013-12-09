@@ -34,6 +34,7 @@ class Users {
                                 .         " Set FirstName='$row2[FirstName]', LastName='$row2[LastName]', Password='$row2[Password]', UserTypes_id='$row2[UserType]' "
                                 .         " WHERE id=$row2[id] ";
                 }else{
+                	$row2[Password] = hash('md5', $row2[Password]);
                         $sql =        " Insert Into Users (FirstName, LastName, Password, UserType) "
                                 .        " Values ('$row2[FirstName]', '$row2[LastName]', '$row2[Password]', '$row2[UserType]') ";
                 }

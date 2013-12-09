@@ -10,7 +10,7 @@ include_once __DIR__ . '/../Models/Order_Items.php';
 include_once __DIR__ . '/../Models/Product_Categories.php';
 include_once __DIR__ . '/../Models/Supliers.php';
 include_once __DIR__ . '/../Models/Products.php';
-
+include_once __DIR__ . '/../Models/Auth.php';
 
 
 
