@@ -7,9 +7,9 @@
 	<dt>created_at</dt>
 	<dd><?=$model['created_at']?> </dd>
 	<dt>Password</dt>
-	<dd><?=$model['password']?> </dd>
+	<dd><?=$model['Password']?> </dd>
 	<dt>UserType</dt>
-	<dd><?=$model['UserType_Name']?> </dd>
+	<dd><?=$model['UserType']?> </dd>
 	
 	
 </dl>
