@@ -9,7 +9,7 @@
 		}
 		public static function GetUser()
 		{
-			return $_SESSION['User'];
+			return $_SESSION['Users'];
 		}
 		public static function HasPermission()
 		{

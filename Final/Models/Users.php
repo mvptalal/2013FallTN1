@@ -5,18 +5,15 @@ class Users {
         static public function Get($id=null)
         {
                 if(isset($id)){
-                	$sql = "SELECT U.*, K.Name as UserType_Name 
-                			FROM Users U
-                			Join Keywords K ON U.UserType=K.id
-                	 		WHERE U.id=$id
-                	 		";
-                        return fetch_one($sql);
+               return fetch_one(     "SELECT * FROM Users WHERE id=$id"
+                	 		);
+							
+                	 		
+                        
+						
                 }else{
-                	$sql = "SELECT U.*, K.Name as UserType_Name 
-                			FROM Users U
-                			Join Keywords K ON U.UserType=K.id
-                	 		";
-                        return fetch_all($sql);
+                	return fetch_all( "SELECT * FROM Users ");
+                        
                 }
         }
 		
