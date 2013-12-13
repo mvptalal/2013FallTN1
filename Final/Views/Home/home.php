@@ -35,14 +35,14 @@
 </style>
 <div class="container">
         <div id="category-list">
-                <ul class="nav nav-pills" data-bind="foreach: categories">
-                 <li data-bind="css: { active: $data == $root.currentCategory() }" >
-                         <a href="#" data-bind="text: Name, click: $root.selectCategory"></a>
-                 </li>
+                <ul class="nav nav-pills" data-bind="foreach: Product_Categories">
+                  <li data-bind="css: { active: $data == $root.currentCategory() }" >
+                          <a href="#" data-bind="text: Name, click: $root.selectCategory"></a>
+                  </li>
                 </ul>        
         </div>
         <br /><br />
-        <div class="row" id="item-list" data-bind="foreach: products">
+        <div class="row" id="item-list" data-bind="foreach: itemList">
                 <div class="col-md-3" data-bind="">
                         <div class="well clearfix">
                                 <img alt="item image" data-bind="attr: {src: Picture_Url}" />
@@ -57,7 +57,7 @@
                 </div>
         </div>
         <div id="shopping-cart-list" class="closed" >
-                <div class="scrolling" data-bind="foreach: cart" >
+                <div class="scrolling"  data-bind="foreach: cart" >
                         <div class="well well-sm clearfix">
                                 <img alt="item image" data-bind="attr: {src: Picture_Url}" />
                                 <h6 data-bind="text: Name"></h6>
@@ -79,13 +79,11 @@
 <script type="text/html" id="shopping-cart-template">
         <span class="glyphicon glyphicon-shopping-cart"></span>
         <a href="#" class="navbar-link" data-bind="click: toggleCartList">Cart</a>
-        <span class="badge" <? $cart = $_SESSION['cart']; echo count($cart); ?> </span>
+        <span class="badge" data-bind="text: cart().length"></span>
 </script>
-
-
 <? function Scripts(){ ?>
         
-        <? global $model; ?>
+          <? global $model; ?>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
         
         <script src="//cdnjs.cloudflare.com/ajax/libs/knockout/3.0.0/knockout-min.js"></script>
@@ -94,17 +92,17 @@
         <script type="text/javascript">
         $(function(){
                 var vm = {
-                        categories: ko.observableArray(),
+                        Product_Categories: ko.observableArray(),
                         currentCategory: ko.observable(),
-                        products: ko.observableArray(),
+                        itemList: ko.observableArray(),
                         cart: ko.observableArray(),
                                                 
                         selectCategory: function(){
                                 vm.currentCategory(this);
                                 $.get("?action=list&format=json",{CategoryId:this.id},null,'json')
                                         .always(function (results) {
-                                                vm.products(results.model);
-                                        });                         
+                                                vm.itemList(results.model);
+                                        });                            
                         },
                         addToCart: function(){
                                 vm.cart.push(this);
@@ -123,13 +121,13 @@
                                 })
                                 return tot;
                 });
-                ko.applyBindings(vm);//take vm and binds to html document
+                ko.applyBindings(vm);
                 $("#shopping-cart").html($("#shopping-cart-template").html())
                 ko.applyBindings(vm, $("#shopping-cart")[0]);
                 
                 $.get("?action=categories&format=json",null,null,'json')
                         .always(function (results) {
-                                vm.categories(results.model);
+                                vm.Product_Categories(results.model);
                         })
         });
         </script>

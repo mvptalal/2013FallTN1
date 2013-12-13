@@ -12,7 +12,7 @@
         <header>
         	  
                 <div class="container">
-                      <h1>My Website</h1>
+                      <h1></h1>
                 
         </header>
         
